@@ -168,9 +168,9 @@
         }
         
         .masonry-scroll-container {
-            height: 80vh; /* Fixed height for the scrollable area */
-            overflow-y: auto; /* Enables vertical scrolling */
-            padding-right: 10px; /* Space for scrollbar */
+            height: 80vh; 
+            overflow-y: auto; 
+            padding-right: 10px; 
         }
         
         .masonry-grid {
@@ -178,7 +178,7 @@
         }
         
         .grid-item {
-            width: 32%; /* Creates roughly 3 columns */
+            width: 32%; 
             margin-bottom: 1rem;
             overflow: hidden;
             border-radius: 8px;
@@ -336,17 +336,12 @@
                 text-align: center;
             }
             .masonry-scroll-container {
-                height: auto; /* Remove fixed height on mobile */
+                height: auto; 
                 overflow-y: visible;
                 padding-right: 0;
             }
             
             /* --- MOBILE MASONRY FIX --- */
-            .masonry-grid {
-                display: flex; /* Use flexbox for mobile */
-                flex-wrap: wrap; /* Allow items to wrap to the next line */
-                justify-content: space-between; /* Distribute space */
-            }
             .grid-item {
                 width: 48.5%; /* Creates two columns with a small gap */
                 margin-bottom: 1rem;
@@ -520,7 +515,7 @@
         // --- FUNCTIONS ---
 
         function initializeMasonry() {
-            if (window.innerWidth <= 768) return; // Don't initialize Masonry on mobile
+            // This function now runs on all screen sizes
             imagesLoaded(grid, function() {
                 msnry = new Masonry(grid, {
                     itemSelector: '.grid-item',
@@ -548,6 +543,7 @@
 
             if (filteredPhotos.length === 0) {
                 grid.innerHTML = '<p>No photos available for this category yet.</p>';
+                if (msnry) msnry.destroy(); // Destroy masonry instance if no photos
                 return;
             }
 
@@ -568,7 +564,13 @@
                 grid.appendChild(item);
             });
             
-            initializeMasonry();
+            // Re-initialize Masonry after adding new items
+            if (msnry) {
+                msnry.reloadItems();
+                msnry.layout();
+            } else {
+                initializeMasonry();
+            }
         }
 
         function updateCategoryInfo(category = 'all') {
