@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
-        /* --- General Setup & Theme (Copied from Homepage for consistency) --- */
+        /* --- General Setup & Theme --- */
         :root {
             --primary-red: #B00000;
             --dark-grey: #222;
@@ -29,10 +29,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
         }
 
         body {
@@ -58,7 +54,7 @@
             color: var(--primary-red);
         }
 
-        /* --- Header (Same as Homepage) --- */
+        /* --- Header --- */
         .header {
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -73,9 +69,20 @@
             align-items: center;
             padding: 0.8rem 20px;
         }
-        .logo img {
-            height: 50px;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-container img {
+            height: 50px; 
             width: auto;
+        }
+        .logo-text {
+            font-family: var(--heading-font);
+            font-size: 1.2rem;
+            color: var(--dark-grey);
+            font-weight: 700;
         }
         .nav-menu a {
             color: var(--dark-grey);
@@ -128,7 +135,7 @@
 
         .gallery-sidebar {
             position: sticky;
-            top: 100px; /* Adjust based on header height */
+            top: 100px;
             height: calc(100vh - 120px);
         }
 
@@ -157,35 +164,33 @@
         }
 
         .gallery-content {
-            min-width: 0; /* Prevents grid blowout */
+            min-width: 0;
+        }
+        
+        .masonry-scroll-container {
+            height: 80vh; /* Fixed height for the scrollable area */
+            overflow-y: auto; /* Enables vertical scrolling */
+            padding-right: 10px; /* Space for scrollbar */
         }
         
         .masonry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
+            width: 100%;
         }
         
-        .masonry-item {
+        .grid-item {
+            width: 32%; /* Creates roughly 3 columns */
+            margin-bottom: 1rem;
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeIn 0.5s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .masonry-item:hover {
+        .grid-item:hover {
             transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
-
-        .masonry-item img {
+        .grid-item img {
             width: 100%;
             height: auto;
             display: block;
@@ -195,19 +200,21 @@
             padding: 4rem 0;
             text-align: center;
         }
-        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 2rem auto;
+        }
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 aspect ratio */
             height: 0;
             overflow: hidden;
-            max-width: 1120px;
-            margin: 2rem auto;
-            background: #000;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        
         .video-wrapper iframe {
             position: absolute;
             top: 0;
@@ -232,19 +239,16 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        
         .lightbox.active {
             opacity: 1;
             visibility: visible;
         }
-
         .lightbox img {
             max-width: 90%;
             max-height: 85%;
             object-fit: contain;
             border-radius: 5px;
         }
-        
         .lightbox-close {
             position: absolute;
             top: 20px;
@@ -254,8 +258,7 @@
             cursor: pointer;
         }
 
-
-        /* --- Footer (Same as Homepage) --- */
+        /* --- Footer --- */
         .footer {
             background-color: var(--dark-grey);
             color: white;
@@ -304,6 +307,9 @@
         }
         
         /* --- Responsive Design --- */
+        @media(max-width: 992px) {
+            .logo-text { display: none; }
+        }
         @media(max-width: 768px) {
             .nav-menu {
                 display: none;
@@ -329,8 +335,15 @@
                 height: auto;
                 text-align: center;
             }
-            .masonry-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            .masonry-scroll-container {
+                height: auto; /* Remove fixed height on mobile */
+                overflow-y: visible;
+            }
+            .grid-item {
+                width: 48%; /* 2 columns on mobile */
+            }
+            .video-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -340,18 +353,19 @@
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <a href="index.html" class="logo">
+            <a href="index.html" class="logo-container">
                 <img src="images/logo-palkar.jpg" alt="Palkar's Nikita Studio Logo">
+                <span class="logo-text">Nikita Photo Studio</span>
             </a>
             <nav class="nav-menu" id="nav-menu">
-    <a href="index.html">Home</a>
-    <a href="gallery.html" class="active">Gallery</a>
-    <a href="services.html">Services</a>
-    <a href="testimonials.html">Testimonials</a>
-    <a href="featured.html">Featured</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-</nav>
+                <a href="index.html">Home</a>
+                <a href="gallery.html" class="active">Gallery</a>
+                <a href="services.html">Services</a>
+                <a href="testimonials.html">Testimonials</a>
+                <a href="featured.html">Featured</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
             <button class="hamburger-menu" id="hamburger-menu">
                 <i class="fas fa-bars"></i>
             </button>
@@ -377,8 +391,10 @@
                 </div>
             </aside>
             <div class="gallery-content">
-                <div class="masonry-grid" id="masonry-grid">
-                    <!-- Images will be generated by JavaScript -->
+                <div class="masonry-scroll-container">
+                    <div class="masonry-grid" id="masonry-grid">
+                        <!-- Images will be generated by JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -386,8 +402,10 @@
 
     <!-- Dynamic Video Section -->
     <section class="video-section" id="video-section" style="display: none;">
-         <div class="video-wrapper" id="video-wrapper">
-            <!-- YouTube iframe will be inserted here -->
+         <div class="container">
+            <div class="video-grid" id="video-grid">
+                <!-- YouTube iframes will be inserted here -->
+            </div>
          </div>
     </section>
 
@@ -412,9 +430,9 @@
                 <h4>Quick Links</h4>
                 <a href="index.html">Home</a>
                 <a href="gallery.html">Gallery</a>
-                <a href="#">Services</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
+                <a href="services.html">Services</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
             </div>
             <div class="footer-column">
                 <h4>Contact Us</h4>
@@ -428,6 +446,10 @@
         </div>
     </footer>
     
+    <!-- Masonry.js Library -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- DATABASE FOR GALLERY ---
@@ -435,7 +457,7 @@
             'all': {
                 title: 'All Our Work',
                 description: 'A curated collection of our finest moments captured across all categories. Browse through our diverse portfolio to see the breadth of our work.',
-                videos: []
+                videos: ['P6vbwJ4ulcM', 'yaFO681MnxE', 'T4S_5pTm-L4', 'vn6UY9T7Oxc', 'wz3AL_zhle8', 'DoE0atag32E', '24Hy6JDvVmg']
             },
             'pre-wedding': {
                 title: 'Pre-Wedding',
@@ -447,54 +469,17 @@
                 description: 'Capturing the magic of your special day, from the grandest moments to the smallest, heartfelt details. Your wedding story, told beautifully.',
                 videos: ['T4S_5pTm-L4', 'vn6UY9T7Oxc']
             },
-            'bridal': {
-                title: 'Bridal',
-                description: 'Elegant and timeless portraits that capture the grace, beauty, and emotion of the bride on her most important day.',
-                videos: []
-            },
-            'engagement': {
-                title: 'Engagement',
-                description: 'Celebrate the joyous beginning of your journey together with a vibrant and memorable engagement shoot.',
-                videos: ['wz3AL_zhle8']
-            },
-            'mehendi': {
-                title: 'Mehendi',
-                description: 'Documenting the intricate beauty and joyful traditions of your Mehendi ceremony with colorful, lively photos.',
-                videos: []
-            },
-            'reception': {
-                title: 'Reception',
-                description: 'Capturing the fun, laughter, and celebration of your wedding reception with candid and energetic photography.',
-                videos: []
-            },
-            'baby-shower': {
-                title: 'Baby Shower',
-                description: 'Cherish the anticipation and joy of motherhood with a heartwarming baby shower photoshoot with friends and family.',
-                videos: []
-            },
-            'thread-ceremony': {
-                title: 'Thread Ceremony',
-                description: 'Respectfully documenting the sacred moments and family traditions of this important rite of passage.',
-                videos: ['DoE0atag32E']
-            },
-            'pre-birthday': {
-                title: 'Pre-Birthday',
-                description: 'A fun and creative photoshoot to build excitement and capture the personality of the star before their big day.',
-                videos: ['24Hy6JDvVmg']
-            },
-            'birthday': {
-                title: 'Birthday',
-                description: 'From cake smashes to milestone celebrations, we capture the pure fun and happiness of birthdays for all ages.',
-                videos: []
-            },
-            'maternity': {
-                title: 'Maternity',
-                description: 'A graceful and intimate photoshoot celebrating the beautiful journey of pregnancy and motherhood.',
-                videos: []
-            }
+            'bridal': { title: 'Bridal', description: 'Elegant and timeless portraits that capture the grace, beauty, and emotion of the bride on her most important day.', videos: [] },
+            'engagement': { title: 'Engagement', description: 'Celebrate the joyous beginning of your journey together with a vibrant and memorable engagement shoot.', videos: ['wz3AL_zhle8'] },
+            'mehendi': { title: 'Mehendi', description: 'Documenting the intricate beauty and joyful traditions of your Mehendi ceremony with colorful, lively photos.', videos: [] },
+            'reception': { title: 'Reception', description: 'Capturing the fun, laughter, and celebration of your wedding reception with candid and energetic photography.', videos: [] },
+            'baby-shower': { title: 'Baby Shower', description: 'Cherish the anticipation and joy of motherhood with a heartwarming baby shower photoshoot with friends and family.', videos: [] },
+            'thread-ceremony': { title: 'Thread Ceremony', description: 'Respectfully documenting the sacred moments and family traditions of this important rite of passage.', videos: ['DoE0atag32E'] },
+            'pre-birthday': { title: 'Pre-Birthday', description: 'A fun and creative photoshoot to build excitement and capture the personality of the star before their big day.', videos: ['24Hy6JDvVmg'] },
+            'birthday': { title: 'Birthday', description: 'From cake smashes to milestone celebrations, we capture the pure fun and happiness of birthdays for all ages.', videos: [] },
+            'maternity': { title: 'Maternity', description: 'A graceful and intimate photoshoot celebrating the beautiful journey of pregnancy and motherhood.', videos: [] }
         };
 
-        // This photos array is now pre-filled based on your counts.
         const photos = [
             { src: 'pre-wedding-01.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-02.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-03.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-04.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-05.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-06.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-07.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-08.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-09.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-10.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-11.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-12.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-13.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-14.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-15.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-16.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-17.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-18.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-19.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-20.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-21.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-22.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-23.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-24.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-25.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-26.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-27.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-28.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-29.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-30.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-31.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-32.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-33.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-34.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-35.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-36.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-37.jpg', category: 'pre-wedding' }, { src: 'pre-wedding-38.jpg', category: 'pre-wedding' },
             { src: 'wedding-01.jpg', category: 'wedding' }, { src: 'wedding-02.jpg', category: 'wedding' }, { src: 'wedding-03.jpg', category: 'wedding' }, { src: 'wedding-04.jpg', category: 'wedding' }, { src: 'wedding-05.jpg', category: 'wedding' }, { src: 'wedding-06.jpg', category: 'wedding' }, { src: 'wedding-07.jpg', category: 'wedding' }, { src: 'wedding-08.jpg', category: 'wedding' }, { src: 'wedding-09.jpg', category: 'wedding' }, { src: 'wedding-10.jpg', category: 'wedding' }, { src: 'wedding-11.jpg', category: 'wedding' }, { src: 'wedding-12.jpg', category: 'wedding' }, { src: 'wedding-13.jpg', category: 'wedding' }, { src: 'wedding-14.jpg', category: 'wedding' }, { src: 'wedding-15.jpg', category: 'wedding' }, { src: 'wedding-16.jpg', category: 'wedding' }, { src: 'wedding-17.jpg', category: 'wedding' }, { src: 'wedding-18.jpg', category: 'wedding' }, { src: 'wedding-19.jpg', category: 'wedding' }, { src: 'wedding-20.jpg', category: 'wedding' }, { src: 'wedding-21.jpg', category: 'wedding' }, { src: 'wedding-22.jpg', category: 'wedding' }, { src: 'wedding-23.jpg', category: 'wedding' }, { src: 'wedding-24.jpg', category: 'wedding' }, { src: 'wedding-25.jpg', category: 'wedding' }, { src: 'wedding-26.jpg', category: 'wedding' }, { src: 'wedding-27.jpg', category: 'wedding' }, { src: 'wedding-28.jpg', category: 'wedding' }, { src: 'wedding-29.jpg', category: 'wedding' }, { src: 'wedding-30.jpg', category: 'wedding' }, { src: 'wedding-31.jpg', category: 'wedding' }, { src: 'wedding-32.jpg', category: 'wedding' }, { src: 'wedding-33.jpg', category: 'wedding' }, { src: 'wedding-34.jpg', category: 'wedding' }, { src: 'wedding-35.jpg', category: 'wedding' },
@@ -515,14 +500,25 @@
         const categoryTitle = document.getElementById('category-title');
         const categoryDescription = document.getElementById('category-description');
         const videoSection = document.getElementById('video-section');
-        const videoWrapper = document.getElementById('video-wrapper');
+        const videoGrid = document.getElementById('video-grid');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxClose = document.getElementById('lightbox-close');
+        let msnry;
 
         // --- FUNCTIONS ---
 
-        // Populate dropdown
+        function initializeMasonry() {
+            imagesLoaded(grid, function() {
+                msnry = new Masonry(grid, {
+                    itemSelector: '.grid-item',
+                    columnWidth: '.grid-item',
+                    percentPosition: true,
+                    gutter: 16
+                });
+            });
+        }
+
         function populateFilter() {
             Object.keys(categories).forEach(key => {
                 const option = document.createElement('option');
@@ -532,7 +528,6 @@
             });
         }
 
-        // Display photos in the grid
         function displayPhotos(category = 'all') {
             grid.innerHTML = '';
             const filteredPhotos = category === 'all' 
@@ -546,48 +541,49 @@
 
             filteredPhotos.forEach(photo => {
                 const item = document.createElement('div');
-                item.className = 'masonry-item';
+                item.className = 'grid-item';
                 const img = document.createElement('img');
                 
                 const imagePath = `images/${photo.src}`;
                 img.src = imagePath;
                 img.alt = `${categories[photo.category].title} photography`;
-                img.loading = 'lazy'; // Improves performance
+                img.loading = 'lazy';
                 img.onerror = () => { img.src = 'https://placehold.co/400x400/ccc/ffffff?text=Image+Not+Found'; };
                 
-                // Add click event for lightbox
                 img.addEventListener('click', () => openLightbox(imagePath));
                 
                 item.appendChild(img);
                 grid.appendChild(item);
             });
+            
+            initializeMasonry();
         }
 
-        // Update category info and video
         function updateCategoryInfo(category = 'all') {
             const catInfo = categories[category];
             categoryTitle.textContent = catInfo.title;
             categoryDescription.textContent = catInfo.description;
 
-            videoWrapper.innerHTML = ''; // Clear previous videos
+            videoGrid.innerHTML = '';
             if (catInfo.videos && catInfo.videos.length > 0) {
-                // For categories with multiple videos, we can create a small playlist or just show the first one.
-                // For simplicity, we'll show the first one.
-                const videoId = catInfo.videos[0]; 
-                const iframe = document.createElement('iframe');
-                iframe.src = `https://www.youtube.com/embed/${videoId}`;
-                iframe.title = "YouTube video player";
-                iframe.frameBorder = "0";
-                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-                iframe.allowFullscreen = true;
-                videoWrapper.appendChild(iframe);
+                catInfo.videos.forEach(videoId => {
+                    const videoWrapper = document.createElement('div');
+                    videoWrapper.className = 'video-wrapper';
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                    iframe.title = "YouTube video player";
+                    iframe.frameBorder = "0";
+                    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                    iframe.allowFullscreen = true;
+                    videoWrapper.appendChild(iframe);
+                    videoGrid.appendChild(videoWrapper);
+                });
                 videoSection.style.display = 'block';
             } else {
                 videoSection.style.display = 'none';
             }
         }
         
-        // Lightbox functions
         function openLightbox(src) {
             lightboxImg.src = src;
             lightbox.classList.add('active');
@@ -595,7 +591,7 @@
 
         function closeLightbox() {
             lightbox.classList.remove('active');
-            lightboxImg.src = ''; // Clear src to stop loading
+            lightboxImg.src = '';
         }
 
         // --- EVENT LISTENERS ---
@@ -619,7 +615,7 @@
 
         // --- INITIALIZE PAGE ---
         populateFilter();
-        displayPhotos('all'); // Show all photos initially
+        displayPhotos('all');
         updateCategoryInfo('all');
         
         // --- MOBILE HAMBURGER MENU ---
