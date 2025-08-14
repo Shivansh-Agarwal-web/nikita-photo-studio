@@ -30,10 +30,6 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: var(--body-font);
             line-height: 1.6;
@@ -72,9 +68,20 @@
             align-items: center;
             padding: 0.8rem 20px;
         }
-        .logo img {
-            height: 50px;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-container img {
+            height: 50px; 
             width: auto;
+        }
+        .logo-text {
+            font-family: var(--heading-font);
+            font-size: 1.2rem;
+            color: var(--dark-grey);
+            font-weight: 700;
         }
         .nav-menu a {
             color: var(--dark-grey);
@@ -118,12 +125,12 @@
         }
 
         .masonry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            width: 100%;
         }
         
-        .masonry-item {
+        .grid-item {
+            width: 32%;
+            margin-bottom: 1rem;
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -131,12 +138,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .masonry-item:hover {
+        .grid-item:hover {
             transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
-        .masonry-item img {
+        .grid-item img {
             width: 100%;
             height: auto;
             display: block;
@@ -226,6 +233,9 @@
         }
         
         /* --- Responsive Design --- */
+        @media(max-width: 992px) {
+            .logo-text { display: none; }
+        }
         @media(max-width: 768px) {
             .nav-menu {
                 display: none;
@@ -245,6 +255,9 @@
             .page-header h1 {
                 font-size: 2.5rem;
             }
+            .grid-item {
+                width: 48%;
+            }
         }
     </style>
 </head>
@@ -253,18 +266,19 @@
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <a href="index.html" class="logo">
+            <a href="index.html" class="logo-container">
                 <img src="images/logo-palkar.jpg" alt="Palkar's Nikita Studio Logo">
+                <span class="logo-text">Nikita Photo Studio</span>
             </a>
             <nav class="nav-menu" id="nav-menu">
-    <a href="index.html">Home</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="services.html">Services</a>
-    <a href="testimonials.html">Testimonials</a>
-    <a href="featured.html" class="active">Featured</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-</nav>
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="services.html">Services</a>
+                <a href="testimonials.html">Testimonials</a>
+                <a href="featured.html" class="active">Featured</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
             <button class="hamburger-menu" id="hamburger-menu">
                 <i class="fas fa-bars"></i>
             </button>
@@ -308,8 +322,8 @@
                 <a href="index.html">Home</a>
                 <a href="gallery.html">Gallery</a>
                 <a href="services.html">Services</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
             </div>
             <div class="footer-column">
                 <h4>Contact Us</h4>
@@ -322,6 +336,10 @@
             <p>&copy; 2025 Palkar's Nikita Photo Studio. All Rights Reserved.</p>
         </div>
     </footer>
+    
+    <!-- Masonry.js Library -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -348,13 +366,25 @@
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             const lightboxClose = document.getElementById('lightbox-close');
+            let msnry;
 
             // --- FUNCTIONS ---
+            function initializeMasonry() {
+                imagesLoaded(grid, function() {
+                    msnry = new Masonry(grid, {
+                        itemSelector: '.grid-item',
+                        columnWidth: '.grid-item',
+                        percentPosition: true,
+                        gutter: 16
+                    });
+                });
+            }
+
             function displayFeaturedImages() {
                 if (!grid) return;
                 featuredImages.forEach(item => {
                     const gridItem = document.createElement('div');
-                    gridItem.className = 'masonry-item';
+                    gridItem.className = 'grid-item';
                     const img = document.createElement('img');
                     
                     const imagePath = `images/${item.src}`;
@@ -368,6 +398,7 @@
                     gridItem.appendChild(img);
                     grid.appendChild(gridItem);
                 });
+                initializeMasonry();
             }
 
             function openLightbox(src) {
