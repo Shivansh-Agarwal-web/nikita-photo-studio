@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Palkar's Nikita Photo Studio</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* --- General Setup & Theme (Copied from Homepage for consistency) --- */
+        :root {
+            --primary-red: #B00000;
+            --dark-grey: #222;
+            --light-grey: #f9f9f9;
+            --text-color: #333;
+            --heading-font: 'Montserrat', sans-serif;
+            --body-font: 'Lato', sans-serif;
+            --cursive-font: 'Dancing Script', cursive;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--body-font);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--heading-font);
+            color: var(--dark-grey);
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-red);
+        }
+
+        /* --- Header (Same as Homepage) --- */
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 20px;
+        }
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        .nav-menu a {
+            color: var(--dark-grey);
+            margin: 0 1rem;
+            padding-bottom: 5px;
+            font-weight: 700;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+        }
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-grey);
+        }
+        
+        /* --- Gallery Page Specific Styles --- */
+        .gallery-header {
+            text-align: center;
+            padding: 4rem 0 2rem;
+        }
+        .gallery-header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .gallery-main {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px; /* Adjust based on header height */
+            height: calc(100vh - 120px);
+        }
+
+        .gallery-dropdown {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: var(--body-font);
+            margin-bottom: 1.5rem;
+        }
+
+        .category-display h2 {
+            font-family: var(--cursive-font);
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .category-display p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .gallery-content {
+            flex-grow: 1;
+        }
+        
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .masonry-item {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .masonry-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .video-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 1120px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- Lightbox --- */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85%;
+            object-fit: contain;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+
+        /* --- Footer (Same as Homepage) --- */
+        .footer {
+            background-color: var(--dark-grey);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        .footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding-bottom: 2rem;
+        }
+        .footer h3, .footer h4 {
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+        .footer a, .footer p {
+            color: #ccc;
+            display: block;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: var(--primary-red);
+        }
+        .footer i {
+            margin-right: 10px;
+            color: var(--primary-red);
+        }
+        .social-icons a {
+            display: inline-block;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: white;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #444;
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* --- Responsive Design --- */
+        @media(max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; left: 0;
+                background-color: white;
+                width: 100%;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                padding: 1rem 0;
+            }
+            .nav-menu.active { display: flex; }
+            .nav-menu a { margin: 1rem; text-align: center; border-bottom: none; }
+            .nav-menu a:hover, .nav-menu a.active { border-bottom: none; color: var(--primary-red); }
+            .hamburger-menu { display: block; }
+
+            .gallery-main {
+                flex-direction: column;
+            }
+            .gallery-sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                text-align: center;
+            }
+            .masonry-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-palkar.jpg" alt="Palkar's Nikita Studio Logo">
+            </a>
+            <nav class="nav-menu" id="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="gallery.html" class="active">Gallery</a>
+                <a href="#">Services</a>
+                <a href="#">Testimonials</a>
+                <a href="#">Featured</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </nav>
+            <button class="hamburger-menu" id="hamburger-menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Gallery Header -->
+    <section class="gallery-header">
+        <h1>Our Gallery</h1>
+        <p>A collection of our favorite moments, beautifully captured.</p>
+    </section>
+
+    <!-- Gallery Main Content -->
+    <main class="gallery-main">
+        <aside class="gallery-sidebar">
+            <select id="category-filter" class="gallery-dropdown">
+                <!-- Options will be generated by JavaScript -->
+            </select>
+            <div class="category-display" id="category-display">
+                <h2 id="category-title"></h2>
+                <p id="category-description"></p>
+            </div>
+        </aside>
+        <div class="gallery-content">
+            <div class="masonry-grid" id="masonry-grid">
+                <!-- Images will be generated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Dynamic Video Section -->
+    <section class="video-section" id="video-section" style="display: none;">
+         <div class="video-wrapper" id="video-wrapper">
+            <!-- YouTube iframe will be inserted here -->
+         </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <img src="" alt="Enlarged gallery image" id="lightbox-img">
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-column">
+                <h3>Palkar's Nikita Photo Studio</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/nikitaphotostudio_-107375848198631/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/palkar.studio" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@nikitaphotostudio1244?si=RvG-qqJluFZC5FC8" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="#">Services</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:nikitastudio1996@gmail.com">nikitastudio1996@gmail.com</a></p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+917066880499">+91 70668 80499</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Shop number 6, Panchayat Hall Mardol, Priol, Goa 403404</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Palkar's Nikita Photo Studio. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- DATABASE FOR GALLERY ---
+        // This is where you will manage all your gallery content.
+        // To add a new photo, just add a new line to the `photos` array.
+        // To add a new category, add it to the `categories` object.
+
+        const categories = {
+            'all': {
+                title: 'All Our Work',
+                description: 'A curated collection of our finest moments captured across all categories. Browse through our diverse portfolio to see the breadth of our work.',
+                videos: []
+            },
+            'pre-wedding': {
+                title: 'Pre-Wedding',
+                description: 'A beautiful, romantic shoot to celebrate your love story before you say \'I do\'. We capture the connection and joy in stunning locations.',
+                videos: ['P6vbwJ4ulcM', 'yaFO681MnxE'] // YouTube Video IDs
+            },
+            'wedding': {
+                title: 'Wedding',
+                description: 'Capturing the magic of your special day, from the grandest moments to the smallest, heartfelt details. Your wedding story, told beautifully.',
+                videos: ['T4S_5pTm-L4', 'vn6UY9T7Oxc']
+            },
+            'bridal': {
+                title: 'Bridal',
+                description: 'Elegant and timeless portraits that capture the grace, beauty, and emotion of the bride on her most important day.',
+                videos: []
+            },
+            'engagement': {
+                title: 'Engagement',
+                description: 'Celebrate the joyous beginning of your journey together with a vibrant and memorable engagement shoot.',
+                videos: ['wz3AL_zhle8']
+            },
+            'mehendi': {
+                title: 'Mehendi',
+                description: 'Documenting the intricate beauty and joyful traditions of your Mehendi ceremony with colorful, lively photos.',
+                videos: []
+            },
+            'reception': {
+                title: 'Reception',
+                description: 'Capturing the fun, laughter, and celebration of your wedding reception with candid and energetic photography.',
+                videos: []
+            },
+            'baby-shower': {
+                title: 'Baby Shower',
+                description: 'Cherish the anticipation and joy of motherhood with a heartwarming baby shower photoshoot with friends and family.',
+                videos: []
+            },
+            'thread-ceremony': {
+                title: 'Thread Ceremony',
+                description: 'Respectfully documenting the sacred moments and family traditions of this important rite of passage.',
+                videos: ['DoE0atag32E']
+            },
+            'pre-birthday': {
+                title: 'Pre-Birthday',
+                description: 'A fun and creative photoshoot to build excitement and capture the personality of the star before their big day.',
+                videos: ['24Hy6JDvVmg']
+            },
+            'birthday': {
+                title: 'Birthday',
+                description: 'From cake smashes to milestone celebrations, we capture the pure fun and happiness of birthdays for all ages.',
+                videos: []
+            },
+            'maternity': {
+                title: 'Maternity',
+                description: 'A graceful and intimate photoshoot celebrating the beautiful journey of pregnancy and motherhood.',
+                videos: []
+            }
+        };
+
+        // IMPORTANT: List all your image files here.
+        // Use the naming convention we discussed: 'category-name-01.jpg'
+        const photos = [
+            // --- Add your photo objects here ---
+            // Example:
+            // { src: 'wedding-01.jpg', category: 'wedding' },
+            // { src: 'wedding-02.jpg', category: 'wedding' },
+            // { src: 'pre-wedding-01.jpg', category: 'pre-wedding' },
+            // { src: 'maternity-01.jpg', category: 'maternity' },
+            // etc... for all 230+ photos
+        ];
+
+        // --- ELEMENTS ---
+        const filter = document.getElementById('category-filter');
+        const grid = document.getElementById('masonry-grid');
+        const categoryTitle = document.getElementById('category-title');
+        const categoryDescription = document.getElementById('category-description');
+        const videoSection = document.getElementById('video-section');
+        const videoWrapper = document.getElementById('video-wrapper');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        // --- FUNCTIONS ---
+
+        // Populate dropdown
+        function populateFilter() {
+            Object.keys(categories).forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = categories[key].title;
+                filter.appendChild(option);
+            });
+        }
+
+        // Display photos in the grid
+        function displayPhotos(category = 'all') {
+            grid.innerHTML = '';
+            const filteredPhotos = category === 'all' 
+                ? photos 
+                : photos.filter(photo => photo.category === category);
+
+            filteredPhotos.forEach(photo => {
+                const item = document.createElement('div');
+                item.className = 'masonry-item';
+                const img = document.createElement('img');
+                img.src = `images/${photo.src}`;
+                img.alt = `${categories[photo.category].title} photography`;
+                img.loading = 'lazy'; // Improves performance
+                
+                // Add click event for lightbox
+                img.addEventListener('click', () => openLightbox(`images/${photo.src}`));
+                
+                item.appendChild(img);
+                grid.appendChild(item);
+            });
+        }
+
+        // Update category info and video
+        function updateCategoryInfo(category = 'all') {
+            const catInfo = categories[category];
+            categoryTitle.textContent = catInfo.title;
+            categoryDescription.textContent = catInfo.description;
+
+            videoWrapper.innerHTML = ''; // Clear previous videos
+            if (catInfo.videos && catInfo.videos.length > 0) {
+                const videoId = catInfo.videos[0]; // For now, just show the first video
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                iframe.title = "YouTube video player";
+                iframe.frameBorder = "0";
+                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                iframe.allowFullscreen = true;
+                videoWrapper.appendChild(iframe);
+                videoSection.style.display = 'block';
+            } else {
+                videoSection.style.display = 'none';
+            }
+        }
+        
+        // Lightbox functions
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightboxImg.src = ''; // Clear src to stop loading
+        }
+
+        // --- EVENT LISTENERS ---
+        filter.addEventListener('change', (e) => {
+            const selectedCategory = e.target.value;
+            displayPhotos(selectedCategory);
+            updateCategoryInfo(selectedCategory);
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // --- INITIALIZE PAGE ---
+        populateFilter();
+        displayPhotos('all'); // Show all photos initially
+        updateCategoryInfo('all');
+        
+        // --- MOBILE HAMBURGER MENU ---
+        const hamburger = document.getElementById('hamburger-menu');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    });
+    </script>
+</body>
+</html>
