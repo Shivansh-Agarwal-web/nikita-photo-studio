@@ -255,9 +255,18 @@
             .page-header h1 {
                 font-size: 2.5rem;
             }
-            .grid-item {
-                width: 48%;
+            
+            /* --- MOBILE MASONRY FIX --- */
+            .masonry-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
             }
+            .grid-item {
+                width: 48.5%; /* Two columns with a small gap */
+                margin-bottom: 1rem;
+            }
+            /* --- END MOBILE MASONRY FIX --- */
         }
     </style>
 </head>
@@ -370,6 +379,7 @@
 
             // --- FUNCTIONS ---
             function initializeMasonry() {
+                if (window.innerWidth <= 768) return; // Don't initialize Masonry on mobile
                 imagesLoaded(grid, function() {
                     msnry = new Masonry(grid, {
                         itemSelector: '.grid-item',
