@@ -338,10 +338,21 @@
             .masonry-scroll-container {
                 height: auto; /* Remove fixed height on mobile */
                 overflow-y: visible;
+                padding-right: 0;
+            }
+            
+            /* --- MOBILE MASONRY FIX --- */
+            .masonry-grid {
+                display: flex; /* Use flexbox for mobile */
+                flex-wrap: wrap; /* Allow items to wrap to the next line */
+                justify-content: space-between; /* Distribute space */
             }
             .grid-item {
-                width: 48%; /* 2 columns on mobile */
+                width: 48.5%; /* Creates two columns with a small gap */
+                margin-bottom: 1rem;
             }
+            /* --- END MOBILE MASONRY FIX --- */
+
             .video-grid {
                 grid-template-columns: 1fr;
             }
@@ -509,6 +520,7 @@
         // --- FUNCTIONS ---
 
         function initializeMasonry() {
+            if (window.innerWidth <= 768) return; // Don't initialize Masonry on mobile
             imagesLoaded(grid, function() {
                 msnry = new Masonry(grid, {
                     itemSelector: '.grid-item',
