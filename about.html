@@ -179,20 +179,20 @@
         }
         
         .story-text ul li {
-            padding-left: 1.75rem;
+            padding-left: 1.5rem;
             position: relative;
             margin-bottom: 0.75rem;
         }
         
-        /* Corrected Pointer Style */
+        /* Corrected Bullet Pointer Style */
         .story-text ul li::before {
-            content: '\\f00c'; /* Font Awesome Checkmark icon */
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
+            content: '•'; /* Simple bullet character */
             color: var(--primary-red);
+            font-weight: bold;
+            font-size: 1.5rem; /* Make it a bit bigger */
             position: absolute;
             left: 0;
-            top: 5px;
+            top: -4px; /* Adjust vertical alignment */
         }
 
         .final-quote {
