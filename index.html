@@ -289,6 +289,8 @@
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: left;
+            display: flex;
+            flex-direction: column;
         }
 
         .service-card:hover {
@@ -304,6 +306,9 @@
 
         .service-card-content {
              padding: 1.5rem;
+             flex-grow: 1;
+             display: flex;
+             flex-direction: column;
         }
 
         .service-card h3 {
@@ -313,6 +318,8 @@
         .service-card p {
             color: #666;
             font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
         }
 
         /* --- Explore Section --- */
@@ -499,6 +506,7 @@
                     <div class="service-card-content">
                         <h3>Wedding</h3>
                         <p>Capturing the magic of your special day, from the grandest moments to the smallest, heartfelt details.</p>
+                        <a href="contact.html?service=Wedding" class="btn">Book This Service</a>
                     </div>
                 </div>
                 <!-- Service Card 2: Maternity -->
@@ -507,6 +515,7 @@
                     <div class="service-card-content">
                         <h3>Maternity</h3>
                         <p>A graceful and intimate photoshoot celebrating the beautiful journey of pregnancy and motherhood.</p>
+                        <a href="contact.html?service=Maternity" class="btn">Book This Service</a>
                     </div>
                 </div>
                 <!-- Service Card 3: Birthday -->
@@ -515,6 +524,7 @@
                     <div class="service-card-content">
                         <h3>Birthday Party</h3>
                         <p>From cake smashes to milestone celebrations, we capture the pure fun and happiness of birthdays.</p>
+                        <a href="contact.html?service=Birthday Party" class="btn">Book This Service</a>
                     </div>
                 </div>
             </div>
