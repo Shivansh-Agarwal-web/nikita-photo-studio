@@ -137,11 +137,20 @@ section { padding: 4rem 0; }
     color: var(--primary-red);
     margin-bottom: 0.5rem;
 }
+
+/* --- UPDATED: Gallery Main Section Structure --- */
 .gallery-main {
     flex-grow: 1;
-    overflow-y: scroll; /* Main content area is scrollable */
     height: 100%;
-    padding: 2rem;
+    display: flex; /* Changed to flex container */
+    flex-direction: column; /* To stack image grid and videos vertically */
+}
+
+/* --- NEW: Scrollable Image Grid Wrapper --- */
+.scrollable-image-grid {
+    flex-grow: 1; /* This makes the grid take all available vertical space */
+    overflow-y: scroll; /* The scrollbar is now ONLY on this container */
+    padding: 2rem; /* Moved padding here */
 }
 
 /* --- NEW: Masonry Grid Styles (Universal) --- */
@@ -185,23 +194,25 @@ section { padding: 4rem 0; }
 }
 .gutter-sizer { width: 15px; } /* Optional if using gutter property */
 
-/* --- NEW: Video Section Styles --- */
+/* --- UPDATED: Video Section Styles --- */
 .video-section {
-    padding-top: 2rem;
+    padding: 0 2rem 2rem 2rem; /* Adjusted padding */
     margin-top: 2rem;
     border-top: 2px solid #eee;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem; /* Increased gap for better spacing */
     justify-content: center;
+    flex-shrink: 0; /* Prevents this section from shrinking */
 }
 .video-wrapper {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
-    flex: 1 1 400px; /* Responsive sizing */
-    max-width: 560px;
+    /* This is the key change for video sizing */
+    flex: 0 1 480px; /* flex-grow:0, flex-shrink:1, flex-basis:480px */
+    width: 100%; /* Ensures responsiveness within the flex container */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
@@ -232,7 +243,9 @@ section { padding: 4rem 0; }
     .gallery-page { height: auto; }
     .gallery-container { flex-direction: column; }
     .gallery-sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid #e0e0e0; }
-    .gallery-main { height: auto; padding: 1.5rem; }
+    .gallery-main { height: auto; }
+    .scrollable-image-grid { padding: 1.5rem; }
+    .video-section { padding: 0 1.5rem 1.5rem 1.5rem; }
 
     .grid-sizer,
     .grid-item {
