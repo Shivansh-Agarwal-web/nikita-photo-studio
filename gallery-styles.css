@@ -212,7 +212,6 @@ section { padding: 4rem 0; }
     overflow: hidden;
     /* This is the key change for video sizing */
     flex: 0 1 480px; /* flex-grow:0, flex-shrink:1, flex-basis:480px */
-    width: 100%; /* Ensures responsiveness within the flex container */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
