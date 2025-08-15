@@ -158,20 +158,18 @@
             margin-bottom: 1rem;
             overflow: hidden;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .grid-item:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
         .grid-item img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .grid-item:hover img {
+            transform: scale(1.05);
         }
         
         .cta-section {
@@ -340,12 +338,10 @@
                 width: 80%;
             }
             
-            /* --- MOBILE MASONRY FIX --- */
             .grid-item {
-                width: 48.5%; /* Two columns with a small gap */
+                width: 48.5%; /* Two columns on mobile */
                 margin-bottom: 1rem;
             }
-            /* --- END MOBILE MASONRY FIX --- */
         }
     </style>
 </head>
@@ -555,5 +551,5 @@
             });
         });
     </script>
-</body>A
+</body>
 </html>
