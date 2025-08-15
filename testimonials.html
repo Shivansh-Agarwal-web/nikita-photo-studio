@@ -5,356 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testimonials - Palkar's Nikita Photo Studio</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css">
 
-    <style>
-        /* --- General Setup & Theme (Consistent with other pages) --- */
-        :root {
-            --primary-red: #B00000;
-            --dark-grey: #222;
-            --light-grey: #f9f9f9;
-            --text-color: #333;
-            --heading-font: 'Montserrat', sans-serif;
-            --body-font: 'Lato', sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: var(--body-font);
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: #fff;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: var(--heading-font);
-            color: var(--dark-grey);
-        }
-        
-        a {
-            text-decoration: none;
-            color: var(--primary-red);
-        }
-
-        /* --- Header (Same as other pages) --- */
-        .header {
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-        .header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 20px;
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .logo-container img {
-            height: 50px; 
-            width: auto;
-        }
-        .logo-text {
-            font-family: var(--heading-font);
-            font-size: 1.2rem;
-            color: var(--dark-grey);
-            font-weight: 700;
-        }
-        .nav-menu a {
-            color: var(--dark-grey);
-            margin: 0 1rem;
-            padding-bottom: 5px;
-            font-weight: 700;
-            transition: color 0.3s ease, border-bottom 0.3s ease;
-        }
-        .nav-menu a:hover, .nav-menu a.active {
-            color: var(--primary-red);
-            border-bottom: 2px solid var(--primary-red);
-        }
-        .hamburger-menu {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--dark-grey);
-        }
-        
-        /* --- Testimonials Page Specific Styles --- */
-        .page-header {
-            text-align: center;
-            padding: 4rem 20px 2rem;
-            background-color: var(--light-grey);
-        }
-        .page-header h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        .page-header p {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .stats-section {
-            padding: 3rem 0;
-            background-color: #fff;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item i {
-            font-size: 2.5rem;
-            color: var(--primary-red);
-            margin-bottom: 1rem;
-        }
-
-        .stat-item h3 {
-            font-size: 1.2rem;
-            margin: 0;
-            color: var(--dark-grey);
-        }
-
-        .testimonials-grid-container {
-            padding: 4rem 20px;
-            background-color: var(--light-grey);
-        }
-
-        .masonry-grid {
-            width: 100%;
-        }
-        
-        .grid-item {
-            width: 32%;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            border-radius: 8px;
-            cursor: pointer;
-            animation: fadeIn 0.6s ease forwards;
-            opacity: 0;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .grid-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .grid-item:hover img {
-            transform: scale(1.05);
-        }
-        
-        .cta-section {
-            padding: 5rem 0;
-            text-align: center;
-            background-color: #fff;
-        }
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .cta-section p {
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 2rem;
-            color: #666;
-        }
-        .cta-buttons .btn {
-            margin: 0 0.5rem;
-        }
-        .btn, .btn-secondary {
-            display: inline-block;
-            padding: 14px 32px;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-        .btn {
-            background-color: var(--primary-red);
-            color: white;
-            border-color: var(--primary-red);
-        }
-        .btn:hover {
-            background-color: #8c0000;
-            border-color: #8c0000;
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--dark-grey);
-            border-color: var(--dark-grey);
-        }
-        .btn-secondary:hover {
-            background-color: var(--dark-grey);
-            color: white;
-        }
-
-        /* --- Lightbox --- */
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .lightbox.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .lightbox img {
-            max-width: 90%;
-            max-height: 85%;
-            object-fit: contain;
-            border-radius: 5px;
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 2.5rem;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        /* --- Footer (Same as other pages) --- */
-        .footer {
-            background-color: var(--dark-grey);
-            color: white;
-            padding: 4rem 0 2rem;
-        }
-        .footer .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            padding-bottom: 2rem;
-        }
-        .footer h3, .footer h4 {
-            margin-bottom: 1rem;
-            color: white;
-            font-size: 1.2rem;
-        }
-        .footer a, .footer p {
-            color: #ccc;
-            display: block;
-            margin-bottom: 0.75rem;
-            transition: color 0.3s ease;
-        }
-        .footer a:hover {
-            color: var(--primary-red);
-        }
-        .footer i {
-            margin-right: 10px;
-            color: var(--primary-red);
-        }
-        .social-icons a {
-            display: inline-block;
-            margin-right: 1rem;
-            font-size: 1.5rem;
-            color: white;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .social-icons a:hover {
-            color: var(--primary-red);
-            transform: translateY(-2px);
-        }
-        .footer-bottom {
-            text-align: center;
-            border-top: 1px solid #444;
-            padding-top: 2rem;
-            margin-top: 2rem;
-        }
-        
-        /* --- Responsive Design --- */
-        @media(max-width: 992px) {
-            .logo-text { display: none; }
-        }
-        @media(max-width: 768px) {
-            .nav-menu {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%; left: 0;
-                background-color: white;
-                width: 100%;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                padding: 1rem 0;
-            }
-            .nav-menu.active { display: flex; }
-            .nav-menu a { margin: 1rem; text-align: center; border-bottom: none; }
-            .nav-menu a:hover, .nav-menu a.active { border-bottom: none; color: var(--primary-red); }
-            .hamburger-menu { display: block; }
-
-            .page-header h1 {
-                font-size: 2.5rem;
-            }
-            .cta-buttons {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            .cta-buttons a {
-                margin: 0.5rem 0;
-                width: 80%;
-            }
-            
-            .grid-item {
-                width: 48.5%; /* Two columns on mobile */
-                margin-bottom: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="gallery-styles.css">
 </head>
 <body>
 
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <a href="index.html" class="logo-container">
@@ -376,64 +38,44 @@
         </div>
     </header>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <h1>What Our Clients Say</h1>
-        <p>Our greatest pride is the joy we bring to our clients. Here's what they have to say about their experience with us.</p>
-    </section>
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>What Our Clients Say</h1>
+                <p>We are honored to have captured so many special moments. Here is what some of our clients have to say about their experience.</p>
+            </div>
+        </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
+        <section class="stats-section">
+            <div class="container">
+                <div class="stat-item">
+                    <i class="fas fa-camera-retro"></i>
+                    <h3>1500+</h3>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-heart"></i>
+                    <h3>2000+</h3>
+                    <p>Events Covered</p>
+                </div>
                 <div class="stat-item">
                     <i class="fas fa-star"></i>
-                    <h3>5 Star Rating</h3>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <h3>1500+ Happy Clients</h3>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-medal"></i>
-                    <h3>98% Satisfactory Rate</h3>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-thumbs-up"></i>
-                    <h3>100% Recommended Us</h3>
+                    <h3>5-Star</h3>
+                    <p>Average Rating</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Testimonials Grid -->
-    <main class="testimonials-grid-container">
-        <div class="container">
-            <div class="masonry-grid" id="testimonials-grid">
-                <!-- Testimonial images will be generated by JavaScript -->
+        <section class="testimonials-gallery">
+            <div class="container">
+                <div class="masonry-grid testimonials-grid">
+                    <div class="grid-sizer"></div>
+                    
+                    </div>
             </div>
-        </div>
+        </section>
     </main>
-    
-    <!-- Final CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to Create Your Story?</h2>
-            <p>We'd be honored to be a part of your special moments. Let's connect and start planning your perfect photoshoot.</p>
-            <div class="cta-buttons">
-                <a href="contact.html" class="btn">Book Session</a>
-                <a href="gallery.html" class="btn-secondary">View Our Gallery</a>
-            </div>
-        </div>
-    </section>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <img src="" alt="Enlarged testimonial screenshot" id="lightbox-img">
-    </div>
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-column">
@@ -464,99 +106,11 @@
         </div>
     </footer>
     
-    <!-- Masonry.js Library -->
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // --- TESTIMONIALS DATABASE ---
-            const testimonials = [
-                { src: 'testimonials-01.jpg' },
-                { src: 'testimonials-02.jpg' },
-                { src: 'testimonials-03.jpg' },
-                { src: 'testimonials-04.jpg' },
-                { src: 'testimonials-05.jpg' },
-                { src: 'testimonials-06.jpg' },
-                { src: 'testimonials-07.jpg' },
-                { src: 'testimonials-08.jpg' },
-                { src: 'testimonials-09.jpg' },
-                { src: 'testimonials-10.jpg' }
-            ];
+    <script src="main.js"></script>
 
-            const grid = document.getElementById('testimonials-grid');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxClose = document.getElementById('lightbox-close');
-            let msnry;
-
-            // --- FUNCTIONS ---
-            function initializeMasonry() {
-                imagesLoaded(grid, function() {
-                    msnry = new Masonry(grid, {
-                        itemSelector: '.grid-item',
-                        columnWidth: '.grid-item',
-                        percentPosition: true,
-                        gutter: 16
-                    });
-                });
-            }
-
-            function displayTestimonials() {
-                if (!grid) return;
-                testimonials.forEach(testimonial => {
-                    const item = document.createElement('div');
-                    item.className = 'grid-item';
-                    const img = document.createElement('img');
-                    
-                    const imagePath = `images/${testimonial.src}`;
-                    img.src = imagePath;
-                    img.alt = 'Client testimonial screenshot';
-                    img.loading = 'lazy';
-                    img.onerror = () => { img.src = 'https://placehold.co/400x600/ccc/ffffff?text=Review+Not+Found'; };
-                    
-                    img.addEventListener('click', () => openLightbox(imagePath));
-                    
-                    item.appendChild(img);
-                    grid.appendChild(item);
-                });
-                initializeMasonry();
-            }
-
-            function openLightbox(src) {
-                lightboxImg.src = src;
-                lightbox.classList.add('active');
-            }
-
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                lightboxImg.src = '';
-            }
-
-            // --- EVENT LISTENERS ---
-            lightboxClose.addEventListener('click', closeLightbox);
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    closeLightbox();
-                }
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeLightbox();
-                }
-            });
-
-            // --- INITIALIZE PAGE ---
-            displayTestimonials();
-
-            // --- MOBILE HAMBURGER MENU ---
-            const hamburger = document.getElementById('hamburger-menu');
-            const navMenu = document.getElementById('nav-menu');
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
-        });
-    </script>
 </body>
 </html>
