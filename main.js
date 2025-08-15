@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         Object.keys(galleryData).forEach(key => {
-            const option = document..createElement('option');
+            const option = document.createElement('option');
             option.value = key;
             option.textContent = galleryData[key].name;
             categorySelect.appendChild(option);
