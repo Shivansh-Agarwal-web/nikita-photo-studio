@@ -1,0 +1,242 @@
+/* --- General Setup & Theme (From index.html) --- */
+:root {
+    --primary-red: #B00000;
+    --dark-grey: #222;
+    --light-grey: #f9f9f9;
+    --text-color: #333;
+    --heading-font: 'Montserrat', sans-serif;
+    --body-font: 'Lato', sans-serif;
+    --cursive-font: 'Playfair Display', serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: var(--body-font);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #fff;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3, h4 { font-family: var(--heading-font); color: var(--dark-grey); }
+a { text-decoration: none; color: var(--primary-red); }
+section { padding: 4rem 0; }
+
+/* --- Header (From index.html) --- */
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.header .container { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 20px; }
+.logo-container { display: flex; align-items: center; gap: 1rem; }
+.logo-container img { height: 50px; width: auto; }
+.logo-text { font-family: var(--heading-font); font-size: 1.2rem; color: var(--dark-grey); font-weight: 700; }
+.nav-menu a { color: var(--dark-grey); margin: 0 1rem; padding-bottom: 5px; font-weight: 700; transition: color 0.3s ease, border-bottom 0.3s ease; }
+.nav-menu a:hover, .nav-menu a.active { color: var(--primary-red); border-bottom: 2px solid var(--primary-red); }
+.hamburger-menu { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dark-grey); }
+
+/* --- Footer (From index.html) --- */
+.footer { background-color: var(--dark-grey); color: white; padding: 4rem 0 2rem; }
+.footer .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; padding-bottom: 2rem; }
+.footer h3, .footer h4 { margin-bottom: 1rem; color: white; font-size: 1.2rem; }
+.footer a, .footer p { color: #ccc; display: block; margin-bottom: 0.75rem; transition: color 0.3s ease; }
+.footer a:hover { color: var(--primary-red); }
+.footer i { margin-right: 10px; color: var(--primary-red); }
+.social-icons a { display: inline-block; margin-right: 1rem; font-size: 1.5rem; color: white; transition: color 0.3s ease, transform 0.3s ease; }
+.social-icons a:hover { color: var(--primary-red); transform: translateY(-2px); }
+.footer-bottom { text-align: center; border-top: 1px solid #444; padding-top: 2rem; margin-top: 2rem; }
+
+/* --- NEW: General Page Styles --- */
+.page-header {
+    background-color: var(--light-grey);
+    text-align: center;
+    padding: 4rem 20px;
+}
+.page-header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+}
+.page-header p {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* --- NEW: Testimonials Stats Section --- */
+.stats-section {
+    background-color: #fff;
+}
+.stats-section .container {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.stat-item i {
+    font-size: 2.5rem;
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+}
+.stat-item h3 {
+    font-size: 2.2rem;
+    color: var(--dark-grey);
+}
+.stat-item p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* --- NEW: Gallery Page Layout --- */
+.gallery-page {
+    height: calc(100vh - 74px); /* Full viewport height minus header */
+    overflow: hidden;
+}
+.gallery-container {
+    display: flex;
+    height: 100%;
+}
+.gallery-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    background: var(--light-grey);
+    height: 100%;
+    position: sticky; /* Make sidebar sticky */
+    top: 74px; /* Align with bottom of header */
+    overflow-y: auto;
+    padding: 2rem;
+    border-right: 1px solid #e0e0e0;
+}
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.custom-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: var(--body-font);
+    font-size: 1rem;
+    background-color: #fff;
+}
+.category-info {
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #ddd;
+}
+.cursive-font {
+    font-family: var(--cursive-font);
+    font-style: italic;
+    font-size: 2.2rem;
+    color: var(--primary-red);
+    margin-bottom: 0.5rem;
+}
+.gallery-main {
+    flex-grow: 1;
+    overflow-y: scroll; /* Main content area is scrollable */
+    height: 100%;
+    padding: 2rem;
+}
+
+/* --- NEW: Masonry Grid Styles (Universal) --- */
+.masonry-grid, .gallery-grid-container {
+    margin: 0 auto;
+}
+/* Clear floats */
+.masonry-grid:after, .gallery-grid-container:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.grid-sizer,
+.grid-item {
+    width: calc(33.333% - 12px); /* 3 columns with gutter */
+}
+.grid-item {
+    float: left;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    
+    /* Fade-in Animation */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.grid-item.is-loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+.grid-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.4s ease;
+}
+.grid-item a:hover img {
+    transform: scale(1.05);
+}
+.gutter-sizer { width: 15px; } /* Optional if using gutter property */
+
+/* --- NEW: Video Section Styles --- */
+.video-section {
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 2px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    flex: 1 1 400px; /* Responsive sizing */
+    max-width: 560px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Responsive Design (From index.html + New styles) --- */
+@media(max-width: 992px) {
+    .logo-text { display: none; }
+    .gallery-sidebar {
+        width: 280px;
+    }
+}
+@media(max-width: 768px) {
+    .nav-menu { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; background-color: white; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 1rem 0; }
+    .nav-menu.active { display: flex; }
+    .nav-menu a { margin: 1rem; text-align: center; border-bottom: none !important; }
+    .nav-menu a:hover, .nav-menu a.active { color: var(--primary-red); }
+    .hamburger-menu { display: block; }
+    .footer .container { text-align: center; }
+
+    /* --- NEW Responsive Gallery & Masonry --- */
+    .gallery-page { height: auto; }
+    .gallery-container { flex-direction: column; }
+    .gallery-sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid #e0e0e0; }
+    .gallery-main { height: auto; padding: 1.5rem; }
+
+    .grid-sizer,
+    .grid-item {
+        width: calc(50% - 8px); /* 2 columns with gutter */
+    }
+    .page-header h1 { font-size: 2.2rem; }
+}
