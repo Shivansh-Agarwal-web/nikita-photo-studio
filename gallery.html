@@ -513,6 +513,7 @@
         // --- FUNCTIONS ---
 
         function initializeMasonry() {
+            // This function now runs on all screen sizes
             imagesLoaded(grid, function() {
                 msnry = new Masonry(grid, {
                     itemSelector: '.grid-item',
@@ -540,7 +541,7 @@
 
             if (filteredPhotos.length === 0) {
                 grid.innerHTML = '<p>No photos available for this category yet.</p>';
-                if (msnry) msnry.destroy();
+                if (msnry) msnry.destroy(); // Destroy masonry instance if no photos
                 return;
             }
 
@@ -561,6 +562,7 @@
                 grid.appendChild(item);
             });
             
+            // Re-initialize Masonry after adding new items
             if (msnry) {
                 msnry.reloadItems();
                 msnry.layout();
