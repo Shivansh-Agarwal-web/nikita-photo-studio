@@ -134,3 +134,19 @@ section { padding: 4rem 0; }
     .grid-sizer, .grid-item { width: calc(50% - 8px); }
     .page-header h1 { font-size: 2.2rem; }
 }
+/* --- Updated Testimonials Stats Icons --- */
+.stats-section .stat-item i.fas.fa-star {
+    color: var(--primary-red); /* Use your website's primary color */
+}
+
+.stats-section .stat-item i.fas.fa-users {
+    color: var(--primary-red); /* Use your website's primary color */
+}
+
+.stats-section .stat-item i.fas.fa-ribbon {
+    color: var(--primary-red); /* Use your website's primary color */
+}
+
+.stats-section .stat-item i.fas.fa-thumbs-up {
+    color: var(--primary-red); /* Use your website's primary color */
+}
