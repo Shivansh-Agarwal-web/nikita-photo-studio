@@ -31,35 +31,44 @@ document.addEventListener('DOMContentLoaded', function() {
         return { msnry, lightbox };
     }
 
-    // --- 3. PAGE-SPECIFIC LOGIC ---
+    // --- 3. GALLERY PAGE LOGIC (REWRITTEN) ---
     if (document.querySelector('.gallery-page')) {
         const galleryData = {
-            'pre-wedding': { name: "Pre Wedding", count: 38, description: "Moments of love and laughter captured before the big day.", videos: ['P6vbwJ4ulcM', 'yaFO681MnxE'] },
-            'wedding': { name: "Wedding", count: 35, description: "Capturing the magic of your special day, from grand moments to small details.", videos: ['T4S_5pTm-L4', 'vn6UY9T7Oxc'] },
+            'pre-wedding': { name: "Pre Wedding", count: 38, description: "Moments of love and laughter captured before the big day, celebrating the journey of togetherness.", videos: ['P6vbwJ4ulcM', 'yaFO681MnxE'] },
+            'wedding': { name: "Wedding", count: 35, description: "Capturing the magic of your special day, from the grandest moments to the smallest, heartfelt details.", videos: ['T4S_5pTm-L4', 'vn6UY9T7Oxc'] },
             'bridal': { name: "Bridal", count: 24, description: "Elegant and timeless portraits that celebrate the beauty and grace of the bride.", videos: [] },
-            'engagement': { name: "Engagement", count: 15, description: "The promise of a lifetime, captured in a moment of pure joy.", videos: ['wz3AL_zhle8'] },
-            'mehendi': { name: "Mehendi", count: 11, description: "Vibrant and colorful captures of the intricate art and joyful traditions.", videos: [] },
-            'reception': { name: "Reception", count: 13, description: "The grand celebration with family and friends, filled with dance and laughter.", videos: [] },
+            'engagement': { name: "Engagement", count: 15, description: "The promise of a lifetime, captured in a moment of pure joy and anticipation.", videos: ['wz3AL_zhle8'] },
+            'mehendi': { name: "Mehendi", count: 11, description: "Vibrant and colorful captures of the intricate art and joyful traditions of the Mehendi ceremony.", videos: [] },
+            'reception': { name: "Reception", count: 13, description: "The grand celebration with family and friends, filled with dance, laughter, and unforgettable moments.", videos: [] },
             'baby-shower': { name: "Baby Shower", count: 13, description: "Celebrating the upcoming arrival with warmth, love, and cherished memories.", videos: [] },
-            'thread-ceremony': { name: "Thread Ceremony", count: 25, description: "Documenting the sacred traditions and family blessings of this rite of passage.", videos: ['DoE0atag32E'] },
-            'pre-birthday': { name: "Pre Birthday", count: 21, description: "A fun and creative photoshoot to build excitement for the big day.", videos: ['24Hy6JDvVmg'] },
-            'birthday': { name: "Birthday", count: 24, description: "From cake smashes to milestone celebrations, we capture pure fun.", videos: [] },
-            'maternity': { name: "Maternity", count: 13, description: "A graceful photoshoot celebrating the beautiful journey of pregnancy.", videos: [] }
+            'thread-ceremony': { name: "Thread Ceremony", count: 25, description: "Documenting the sacred traditions and family blessings of this significant rite of passage.", videos: ['DoE0atag32E'] },
+            'pre-birthday': { name: "Pre Birthday", count: 21, description: "A fun and creative photoshoot to build excitement and celebrate the year that has passed.", videos: ['24Hy6JDvVmg'] },
+            'birthday': { name: "Birthday", count: 24, description: "From cake smashes to milestone celebrations, we capture the pure fun and happiness of birthdays.", videos: [] },
+            'maternity': { name: "Maternity", count: 13, description: "A graceful and intimate photoshoot celebrating the beautiful journey of pregnancy and motherhood.", videos: [] }
         };
 
+        // Get all necessary elements from the page
         const gridContainer = document.querySelector('.gallery-grid-container');
         const categorySelect = document.getElementById('category-select');
         const categoryTitle = document.getElementById('category-title');
-        const categoryDesc = document.getElementById('category-description');
-        const videoSection = document.getElementById('video-section');
+        const categoryDescription = document.getElementById('category-description');
+        const pageVideoSection = document.getElementById('page-video-section');
+        const videoSectionTitle = document.getElementById('video-section-title');
+        const videoGrid = document.getElementById('video-grid');
+        
         let msnry, lightbox;
 
-        function populateGrid(categoryKey) {
-            gridContainer.innerHTML = '<div class="grid-sizer"></div>';
+        function updateGallery(categoryKey) {
             const category = galleryData[categoryKey];
             if (!category) return;
 
-            const fragment = document.createDocumentFragment();
+            // 1. Update Sidebar Info
+            categoryTitle.textContent = category.name;
+            categoryDescription.textContent = category.description;
+            
+            // 2. Populate Image Grid
+            gridContainer.innerHTML = '<div class="grid-sizer"></div>'; // Clear old images
+            const imageFragment = document.createDocumentFragment();
             for (let i = 1; i <= category.count; i++) {
                 const imgNum = i.toString().padStart(2, '0');
                 const imgPath = `images/${categoryKey}-${imgNum}.jpg`;
@@ -78,39 +87,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 link.appendChild(img);
                 gridItem.appendChild(link);
-                fragment.appendChild(gridItem);
+                imageFragment.appendChild(gridItem);
             }
-            gridContainer.appendChild(fragment);
+            gridContainer.appendChild(imageFragment);
 
-            categoryTitle.textContent = category.name;
-            categoryDesc.textContent = category.description;
-            
-            // --- MODIFIED VIDEO LOGIC ---
-            videoSection.innerHTML = ''; // Clear previous videos
+            // 3. Populate the NEW Separate Video Section
+            videoGrid.innerHTML = ''; // Clear old videos
             if (category.videos && category.videos.length > 0) {
+                videoSectionTitle.textContent = `Our ${category.name} Video Collection`;
+                
                 category.videos.forEach(videoId => {
                     const videoWrapper = document.createElement('div');
                     videoWrapper.className = 'video-wrapper';
-
-                    const iframe = document.createElement('iframe');
-                    iframe.src = `https://www.youtube.com/embed/${videoId}`;
-                    iframe.frameBorder = "0";
-                    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-                    iframe.allowFullscreen = true;
-
-                    videoWrapper.appendChild(iframe);
-                    videoSection.appendChild(videoWrapper);
+                    videoWrapper.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    videoGrid.appendChild(videoWrapper);
                 });
+
+                pageVideoSection.classList.add('visible'); // Show the entire section
+            } else {
+                pageVideoSection.classList.remove('visible'); // Hide section if no videos
             }
 
+            // 4. Re-initialize Masonry and Lightbox
             if (msnry) msnry.destroy();
             if (lightbox) lightbox.destroy();
-
             const instances = initializeMasonryGrid('.gallery-grid-container');
             msnry = instances.msnry;
             lightbox = instances.lightbox;
         }
 
+        // Setup dropdown and initial load
         Object.keys(galleryData).forEach(key => {
             const option = document.createElement('option');
             option.value = key;
@@ -118,11 +124,13 @@ document.addEventListener('DOMContentLoaded', function() {
             categorySelect.appendChild(option);
         });
 
-        categorySelect.addEventListener('change', (e) => populateGrid(e.target.value));
-        populateGrid('pre-wedding');
+        categorySelect.addEventListener('change', (e) => updateGallery(e.target.value));
+        
+        // Load the first category on page start
+        updateGallery('pre-wedding');
     }
 
-    // --- TESTIMONIALS & FEATURED PAGE LOGIC ---
+    // --- TESTIMONIALS & FEATURED PAGE LOGIC (No changes needed here) ---
     function setupSimpleGrid(gridClass, imgPrefix, count) {
         if (document.querySelector(gridClass)) {
             const grid = document.querySelector(gridClass);
