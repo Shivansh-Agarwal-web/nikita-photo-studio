@@ -59,44 +59,17 @@ section { padding: 4rem 0; }
 .stat-item h3 { font-size: 2.2rem; color: var(--dark-grey); }
 .stat-item p { font-size: 1rem; color: #666; }
 
-/* --- FINAL, ROBUST GALLERY LAYOUT --- */
-.gallery-page { height: calc(100vh - 74px); overflow: hidden; }
-.gallery-container { display: flex; height: 100%; }
-.gallery-sidebar { width: 320px; flex-shrink: 0; background: var(--light-grey); position: sticky; top: 74px; overflow-y: auto; padding: 2rem; border-right: 1px solid #e0e0e0; }
-.gallery-main {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-.scrollable-image-grid {
-    flex-grow: 1;
-    overflow-y: scroll;
-    padding: 2rem;
-    height: 70%; /* Explicitly set a starting height */
-}
-.video-section {
-    flex-shrink: 0; /* Prevents this section from shrinking */
-    padding: 1.5rem 2rem;
-    border-top: 2px solid #eee;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
-    align-items: center;
-}
-.video-wrapper {
-    flex: 1 1 480px; /* Allow flexible sizing up to 480px */
-    max-width: 480px;
-    aspect-ratio: 16 / 9; /* The modern way to force aspect ratio */
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-.video-wrapper iframe {
-    width: 100%;
-    height: 100%;
-}
+/* --- CORRECTED GALLERY LAYOUT --- */
+.gallery-page { padding: 0; } /* Remove padding to allow full height */
+.gallery-container { display: flex; height: calc(100vh - 74px); }
+.gallery-sidebar { width: 320px; flex-shrink: 0; background: var(--light-grey); overflow-y: auto; padding: 2rem; border-right: 1px solid #e0e0e0; }
+.gallery-main { flex-grow: 1; overflow-y: scroll; padding: 2rem; }
+
+/* --- Sidebar Content --- */
+.sidebar-content { display: flex; flex-direction: column; gap: 1.5rem; }
+.custom-select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-family: var(--body-font); font-size: 1rem; background-color: #fff; }
+.category-info { margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+.cursive-font { font-family: var(--cursive-font); font-style: italic; font-size: 2.2rem; color: var(--primary-red); margin-bottom: 0.5rem; }
 
 /* --- Masonry Grid Styles (Universal) --- */
 .masonry-grid, .gallery-grid-container { margin: 0 auto; }
@@ -106,6 +79,40 @@ section { padding: 4rem 0; }
 .grid-item.is-loaded { opacity: 1; transform: translateY(0); }
 .grid-item img { display: block; width: 100%; height: auto; transition: transform 0.4s ease; }
 .grid-item a:hover img { transform: scale(1.05); }
+
+/* --- NEW SEPARATE VIDEO SECTION --- */
+.page-video-section {
+    background-color: var(--light-grey);
+    padding: 4rem 0;
+    display: none; /* Hidden by default */
+}
+.page-video-section.visible {
+    display: block; /* Shown by JavaScript when videos exist */
+}
+.page-video-section h2 {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 2.5rem;
+}
+.video-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+.video-wrapper {
+    flex: 1 1 480px;
+    max-width: 500px;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+.video-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
 
 /* --- Responsive Design --- */
 @media(max-width: 992px) {
@@ -119,12 +126,11 @@ section { padding: 4rem 0; }
     .nav-menu a:hover, .nav-menu a.active { color: var(--primary-red); }
     .hamburger-menu { display: block; }
     .footer .container { text-align: center; }
-    .gallery-page { height: auto; }
-    .gallery-container { flex-direction: column; }
-    .gallery-sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid #e0e0e0; }
-    .gallery-main, .scrollable-image-grid { height: auto; }
-    .scrollable-image-grid { padding: 1.5rem; }
-    .video-section { padding: 1.5rem; }
+    
+    .gallery-container { height: auto; flex-direction: column; }
+    .gallery-sidebar { position: static; width: 100%; border-right: none; border-bottom: 1px solid #e0e0e0; }
+    .gallery-main { height: auto; overflow-y: visible; padding: 1.5rem; }
+    
     .grid-sizer, .grid-item { width: calc(50% - 8px); }
     .page-header h1 { font-size: 2.2rem; }
 }
