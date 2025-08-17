@@ -150,3 +150,14 @@ section { padding: 4rem 0; }
 .stats-section .stat-item i.fas.fa-thumbs-up {
     color: var(--primary-red); /* Use your website's primary color */
 }
+/* --- About Page Image Captions --- */
+.story-image {
+    position: relative;
+    text-align: center;
+}
+.image-caption {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 1rem;
+    font-style: italic;
+}
