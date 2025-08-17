@@ -10,7 +10,267 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="gallery-styles.css">
+
+    <style>
+        /* --- General Setup & Theme (Consistent with other pages) --- */
+        :root {
+            --primary-red: #B00000;
+            --dark-grey: #222;
+            --light-grey: #f9f9f9;
+            --text-color: #333;
+            --heading-font: 'Montserrat', sans-serif;
+            --body-font: 'Lato', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--body-font);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--heading-font);
+            color: var(--dark-grey);
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-red);
+        }
+
+        /* --- Header (Same as other pages) --- */
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 20px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-container img {
+            height: 50px; 
+            width: auto;
+        }
+        .logo-text {
+            font-family: var(--heading-font);
+            font-size: 1.2rem;
+            color: var(--dark-grey);
+            font-weight: 700;
+        }
+        .logo-subtext {
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: -5px;
+            font-weight: 400;
+        }
+        .nav-menu a {
+            color: var(--dark-grey);
+            margin: 0 1rem;
+            padding-bottom: 5px;
+            font-weight: 700;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+        }
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-grey);
+        }
+        
+        /* --- Services Page Specific Styles --- */
+        .page-header {
+            text-align: center;
+            padding: 4rem 20px 2rem;
+            background-color: var(--light-grey);
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .services-grid-container {
+            padding: 4rem 20px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .service-card {
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .service-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: var(--primary-red);
+            color: white;
+            border: 2px solid var(--primary-red);
+        }
+
+        .btn:hover {
+            background-color: #8c0000;
+            border-color: #8c0000;
+        }
+
+
+        /* --- Footer (Same as other pages) --- */
+        .footer {
+            background-color: var(--dark-grey);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        .footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding-bottom: 2rem;
+        }
+        .footer h3, .footer h4 {
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+        .footer a, .footer p {
+            color: #ccc;
+            display: block;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: var(--primary-red);
+        }
+        .footer i {
+            margin-right: 10px;
+            color: var(--primary-red);
+        }
+        .social-icons a {
+            display: inline-block;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: white;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #444;
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* --- Responsive Design --- */
+        @media(max-width: 992px) {
+            .logo-text { display: none; }
+        }
+        @media(max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; left: 0;
+                background-color: white;
+                width: 100%;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                padding: 1rem 0;
+            }
+            .nav-menu.active { display: flex; }
+            .nav-menu a { margin: 1rem; text-align: center; border-bottom: none; }
+            .nav-menu a:hover, .nav-menu a.active { border-bottom: none; color: var(--primary-red); }
+            .hamburger-menu { display: block; }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -38,9 +298,193 @@
         </div>
     </header>
 
+    <section class="page-header">
+        <h1>Our Services</h1>
+        <p>Comprehensive photography and videography services to capture every one of life's precious moments.</p>
+    </section>
+
+    <main class="services-grid-container">
+        <div class="container">
+            <div class="services-grid">
+                
+                <div class="service-card">
+                    <img src="images/wedding-services.jpg" alt="Wedding Photography">
+                    <div class="service-card-content">
+                        <h3>Wedding</h3>
+                        <p>Capturing the magic of your special day, from the grandest moments to the smallest, heartfelt details.</p>
+                        <a href="contact.html?service=Wedding" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/pre-wedding-services.jpg" alt="Pre Wedding Photography">
+                    <div class="service-card-content">
+                        <h3>Pre Wedding</h3>
+                        <p>A beautiful, romantic shoot to celebrate your love story before you say 'I do'.</p>
+                        <a href="contact.html?service=Pre Wedding" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/bridal-services.jpg" alt="Bridal Photography">
+                    <div class="service-card-content">
+                        <h3>Bridal</h3>
+                        <p>Elegant portraits that capture the grace, beauty, and emotion of the bride on her wedding day.</p>
+                        <a href="contact.html?service=Bridal" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/engagement-services.jpg" alt="Engagement Photography">
+                    <div class="service-card-content">
+                        <h3>Engagement</h3>
+                        <p>Celebrate the joyous beginning of your journey together with a vibrant and memorable engagement shoot.</p>
+                        <a href="contact.html?service=Engagement" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/sangeet-services.jpg" alt="Sangeet Photography">
+                    <div class="service-card-content">
+                        <h3>Sangeet</h3>
+                        <p>Documenting the vibrant colors, energetic dances, and joyful traditions of your Sangeet night.</p>
+                        <a href="contact.html?service=Sangeet" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/reception-services.jpg" alt="Reception Photography">
+                    <div class="service-card-content">
+                        <h3>Reception</h3>
+                        <p>Capturing the fun, laughter, and celebration of your wedding reception with candid and energetic photography.</p>
+                        <a href="contact.html?service=Reception" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/baby-shower-services.jpg" alt="Baby Shower Photography">
+                    <div class="service-card-content">
+                        <h3>Baby Shower</h3>
+                        <p>Cherish the anticipation and joy of motherhood with a heartwarming baby shower photoshoot.</p>
+                        <a href="contact.html?service=Baby Shower" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/thread-ceremony-services.jpg" alt="Thread Ceremony Photography">
+                    <div class="service-card-content">
+                        <h3>Thread Ceremony</h3>
+                        <p>Respectfully documenting the sacred moments and family traditions of this important rite of passage.</p>
+                        <a href="contact.html?service=Thread Ceremony" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/pre-birthday-services.jpg" alt="Pre Birthday Photography">
+                    <div class="service-card-content">
+                        <h3>Pre Birthday</h3>
+                        <p>A fun and creative photoshoot to build excitement and capture the personality of the star before their big day.</p>
+                        <a href="contact.html?service=Pre Birthday" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/birthday-party-services.jpg" alt="Birthday Party Photography">
+                    <div class="service-card-content">
+                        <h3>Birthday Party</h3>
+                        <p>From cake smashes to milestone celebrations, we capture the pure fun and happiness of birthdays.</p>
+                        <a href="contact.html?service=Birthday Party" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/maternity-services.jpg" alt="Maternity Photography">
+                    <div class="service-card-content">
+                        <h3>Maternity</h3>
+                        <p>A graceful and intimate photoshoot celebrating the beautiful journey of pregnancy and motherhood.</p>
+                        <a href="contact.html?service=Maternity" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/corporates-services.jpg" alt="Corporates Photography">
+                    <div class="service-card-content">
+                        <h3>Corporates</h3>
+                        <p>Professional photography for your business needs, including headshots, office events, and branding imagery.</p>
+                        <a href="contact.html?service=Corporates" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/family-group-services.jpg" alt="Family & Group Photography">
+                    <div class="service-card-content">
+                        <h3>Family & Group</h3>
+                        <p>Timeless portraits and candid moments that capture the unique bond of your family and friends.</p>
+                        <a href="contact.html?service=Family & Group" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/events-parties-services.jpg" alt="Events & Parties Photography">
+                    <div class="service-card-content">
+                        <h3>Events & Parties</h3>
+                        <p>Dynamic photography to capture the energy and key moments of any special event or party.</p>
+                        <a href="contact.html?service=Events & Parties" class="btn">Book This Service</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <img src="images/drone-services-services.jpg" alt="Drone Services">
+                    <div class="service-card-content">
+                        <h3>Drone Services</h3>
+                        <p>Breathtaking aerial photos and videos to give your wedding or event a stunning, cinematic perspective.</p>
+                        <a href="contact.html?service=Drone Services" class="btn">Book This Service</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
     <footer class="footer">
-        </footer>
+        <div class="container">
+            <div class="footer-column">
+                <h3>Palkar's Nikita Photo Studio</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/nikitaphotostudio_-107375848198631/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/palkar.studio" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@nikitaphotostudio1244?si=RvG-qqJluFZC5FC8" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="services.html">Services</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:nikitastudio1996@gmail.com">nikitastudio1996@gmail.com</a></p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+917066880499">+91 7066880499</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Shop number 6, Panchayat Hall Mardol, Priol, Goa 403404</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Palkar's Nikita Photo Studio. All Rights Reserved.</p>
+        </div>
+    </footer>
     
-    <script src="main.js"></script>
+    <script>
+        // --- MOBILE HAMBURGER MENU ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger-menu');
+            const navMenu = document.getElementById('nav-menu');
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
 </html>
