@@ -161,3 +161,17 @@ section { padding: 4rem 0; }
     margin-top: 1rem;
     font-style: italic;
 }
+/* --- New Contact Form Styles --- */
+.destination-wedding-group {
+    transition: all 0.4s ease;
+    overflow: hidden;
+    max-height: 100px; /* Adjust as needed */
+    opacity: 1;
+}
+
+.destination-wedding-group.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0; /* Remove margin when hidden */
+    padding: 0;
+}
