@@ -33,8 +33,18 @@ section { padding: 4rem 0; }
 .header .container { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 20px; }
 .logo-container { display: flex; align-items: center; gap: 1rem; }
 .logo-container img { height: 50px; width: auto; }
-.logo-text { font-family: var(--heading-font); font-size: 1.2rem; color: var(--dark-grey); font-weight: 700; }
-.logo-subtext { font-size: 0.75rem; color: #777; margin-top: -5px; font-weight: 400;
+.logo-text {
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+    color: var(--dark-grey);
+    font-weight: 700;
+}
+/* THIS IS THE NEW STYLE FOR THE HEADER SUBTEXT */
+.logo-subtext {
+    font-size: 0.75rem;
+    color: #777;
+    margin-top: -5px;
+    font-weight: 400;
 }
 .nav-menu a { color: var(--dark-grey); margin: 0 1rem; padding-bottom: 5px; font-weight: 700; transition: color 0.3s ease, border-bottom 0.3s ease; }
 .nav-menu a:hover, .nav-menu a.active { color: var(--primary-red); border-bottom: 2px solid var(--primary-red); }
@@ -151,29 +161,4 @@ section { padding: 4rem 0; }
 
 .stats-section .stat-item i.fas.fa-thumbs-up {
     color: var(--primary-red); /* Use your website's primary color */
-}
-/* --- About Page Image Captions --- */
-.story-image {
-    position: relative;
-    text-align: center;
-}
-.image-caption {
-    font-size: 0.9rem;
-    color: #555;
-    margin-top: 1rem;
-    font-style: italic;
-}
-/* --- New Contact Form Styles --- */
-.destination-wedding-group {
-    transition: all 0.4s ease;
-    overflow: hidden;
-    max-height: 100px; /* Adjust as needed */
-    opacity: 1;
-}
-
-.destination-wedding-group.hidden {
-    max-height: 0;
-    opacity: 0;
-    margin-bottom: 0; /* Remove margin when hidden */
-    padding: 0;
 }
