@@ -11,8 +11,310 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <link rel="stylesheet" href="gallery-styles.css">
+    <style>
+        /* --- General Setup & Theme (Consistent with other pages) --- */
+        :root {
+            --primary-red: #B00000;
+            --dark-grey: #222;
+            --light-grey: #f9f9f9;
+            --text-color: #333;
+            --heading-font: 'Montserrat', sans-serif;
+            --body-font: 'Lato', sans-serif;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--body-font);
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px; /* Corrected width for consistency */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .about-container { /* Specific container for about page content */
+             max-width: 1000px;
+             margin: 0 auto;
+             padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--heading-font);
+            color: var(--dark-grey);
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-red);
+        }
+
+        /* --- Header (Same as other pages) --- */
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 20px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-container img {
+            height: 50px; 
+            width: auto;
+        }
+        .logo-text {
+            font-family: var(--heading-font);
+            font-size: 1.2rem;
+            color: var(--dark-grey);
+            font-weight: 700;
+        }
+        .logo-subtext {
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: -5px;
+            font-weight: 400;
+        }
+        .nav-menu a {
+            color: var(--dark-grey);
+            margin: 0 1rem;
+            padding-bottom: 5px;
+            font-weight: 700;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+        }
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-grey);
+        }
+        
+        /* --- About Page Specific Styles --- */
+        .page-header {
+            text-align: center;
+            padding: 4rem 20px 2rem;
+            background-color: var(--light-grey);
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .about-section {
+            padding: 4rem 0;
+        }
+
+        .story-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .story-block:nth-child(even) .story-image {
+            order: 2;
+        }
+        .story-block:nth-child(even) .story-text {
+            order: 1;
+        }
+
+        .story-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .story-image img:hover {
+            transform: scale(1.05);
+        }
+
+        /* NEW: Image caption style */
+        .image-caption {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 1rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .story-text h2 {
+            font-size: 1.8rem;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+        }
+        
+        .story-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-grey);
+        }
+
+        .story-text p, .story-text ul {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        
+        .story-text ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .story-text ul li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Corrected Bullet Pointer Style */
+        .story-text ul li::before {
+            content: '•'; /* Simple bullet character */
+            color: var(--primary-red);
+            font-weight: bold;
+            font-size: 1.5rem; /* Make it a bit bigger */
+            position: absolute;
+            left: 0;
+            top: -4px; /* Adjust vertical alignment */
+        }
+
+        .final-quote {
+            text-align: center;
+            padding: 4rem 20px;
+            background-color: var(--dark-grey);
+            color: white;
+        }
+        
+        .final-quote p {
+            font-family: var(--heading-font);
+            font-size: 1.5rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            border-left: 4px solid var(--primary-red);
+            padding-left: 2rem;
+            text-align: left;
+        }
+
+        /* --- Lightbox (Same as other pages) --- */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* --- Footer (Same as other pages) --- */
+        .footer {
+            background-color: var(--dark-grey);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        .footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding-bottom: 2rem;
+        }
+        .footer h3, .footer h4 { margin-bottom: 1rem; color: white; font-size: 1.2rem; }
+        .footer a, .footer p { color: #ccc; display: block; margin-bottom: 0.75rem; transition: color 0.3s ease; }
+        .footer a:hover { color: var(--primary-red); }
+        .footer i { margin-right: 10px; color: var(--primary-red); }
+        .social-icons a { display: inline-block; margin-right: 1rem; font-size: 1.5rem; color: white; transition: color 0.3s ease, transform 0.3s ease; }
+        .social-icons a:hover { color: var(--primary-red); transform: translateY(-2px); }
+        .footer-bottom { text-align: center; border-top: 1px solid #444; padding-top: 2rem; margin-top: 2rem; }
+        
+        /* --- Responsive Design --- */
+        @media(max-width: 992px) {
+            .logo-text { display: none; }
+        }
+        @media(max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; left: 0;
+                background-color: white;
+                width: 100%;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                padding: 1rem 0;
+            }
+            .nav-menu.active { display: flex; }
+            .nav-menu a { margin: 1rem; text-align: center; border-bottom: none; }
+            .nav-menu a:hover, .nav-menu a.active { border-bottom: none; color: var(--primary-red); }
+            .hamburger-menu { display: block; }
+
+            .page-header h1 { font-size: 2.5rem; }
+            
+            .story-block {
+                grid-template-columns: 1fr;
+            }
+            .story-block:nth-child(even) .story-image {
+                order: 1; /* Stack image first on mobile */
+            }
+            .story-block .story-text {
+                order: 2; /* Stack text second on mobile */
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -22,7 +324,7 @@
                 <img src="images/logo-palkar.jpg" alt="Palkar's Nikita Photo Studio Logo">
                 <div>
                     <div class="logo-text">Palkar's Nikita Photo Studio</div>
-                    <div class="logo-subtext">Since 191996</div>
+                    <div class="logo-subtext">Since 1996</div>
                 </div>
             </a>
             <nav class="nav-menu" id="nav-menu">
@@ -149,7 +451,7 @@
             <div class="footer-column">
                 <h4>Contact Us</h4>
                 <p><i class="fas fa-envelope"></i> <a href="mailto:nikitastudio1996@gmail.com">nikitastudio1996@gmail.com</a></p>
-                <p><i class="fas fa-phone"></i> <a href="tel:+917066880499">+91 70668 80499</a></p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+917066880499">+91 7066880499</a></p>
                 <p><i class="fas fa-map-marker-alt"></i> Shop number 6, Panchayat Hall Mardol, Priol, Goa 403404</p>
             </div>
         </div>
